@@ -10,11 +10,13 @@ A Simple API for check Spam and Temporary mails
 - [Patch Note](#all-changes)
 
 
-## Different Type of scan:
-Type | Are the *Spam* domains blocked?| Are the *BlackList* emails blocked? | Are the *Unavailable* emails blocked?  | Default
-:-: | :-: | :-: | :-: | :-:
-`Low-scan` | *yes* | *yes* | *no* | ● |
+## How is set-up hastemail?:
+Type | Are the *Spam* domains blocked?| Are the *BlackList* emails blocked? | Are the *Unavailable* emails blocked?  
+:-: | :-: | :-: | :-: | 
+`Low-scan` | *yes* | *yes* | *no* |
 
+## About the scan ...
+Hastemail, simply check a local database made in JSON for check if an email is currently signed as malicious. New functions allow hastemail to check if a domain is reliable and secure, and the api can reject the disposable and spam domains!
 
 
 ## All Changes:
