@@ -34,12 +34,36 @@ var Http = new XMLHttpRequest();
 /********************************************************************************************************************************************************************************************* */
                                                                                        // - General Function - //
 /********************************************************************************************************************************************************************************************* */
-function testing(req, response) 
+
+//check json file 
+function testing() 
 {
     let rawdata = fs.readFileSync('test.json');
-    let student = JSON.parse(rawdata);
-    console.log(student);
-    return(student);
+    let mydata = JSON.parse(rawdata);
+    console.log(mydata);
+    return(mydata);
+};
+
+
+//filter json file
+function filter(email) 
+{
+    let rawdata = fs.readFileSync('pvt.json');
+    let mydata = JSON.parse(rawdata);
+
+     //
+    //const result = myData.filter((x) => x.email === email);
+   // 
+        const result = mydata.filter(obj => {
+          for (let [key, value] of Object.entries(obj)) {
+            if (value === email) {
+              return true;
+            }
+          }
+        });
+        console.log(result); // [ { '2': 'bad@gmail.com' } ]
+        return result.length > 0;
+      
 };
 
 
@@ -64,6 +88,13 @@ app.get('/status', function(req, res)
 {
     res.status(200).send("Tutto ok!").end();
 });
+
+app.get('/pvt', function(req, res)
+{
+let example = filter("bad@gmail.com");
+console.log("risposta: " + example); // example è una variabile true/false, la puoi utilizzare per verificare se un email è presente!!
+});
+
 
 
 

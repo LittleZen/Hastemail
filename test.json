@@ -1,7 +1,11 @@
-{ 
-    "name": "Sara",
-    "age": 23,
-    "gender": "Female",
-    "department": "History",
-    "car": "Honda"
-}
+[
+	{
+		"idx": 1, "email": "black@gmail.com"
+	},
+	{
+		"idx": 2, "email": "bad@gmail.com"
+	},
+	{
+		"idx": 3, "email": "strangemail@gmail.com"
+	}
+]
