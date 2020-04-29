@@ -1,0 +1,2 @@
+# Hastemail
+Simple API
