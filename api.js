@@ -49,9 +49,9 @@ function testing()
 //filter json file
 function filter(email) 
 {
+  var myarray = [];
   let rawdata = fs.readFileSync('pvt.json');
   let mydata = JSON.parse(rawdata);
-  var myarray = [];
   var myarray = JSON.stringify(mydata.blacklist);
   var result = myarray.includes(email);
   if(!result)

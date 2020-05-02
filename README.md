@@ -30,6 +30,21 @@ Hastemail, simply check a local database made in JSON for check if an email is c
 - [x] New readme, new start, new stuff 😊
 
 
+### Update [02/05/2020]
+
+- [x] Added function for check the entire blacklist
+- [x] Added function for check if a single email is present into black list 
+- [x] Added function for append new emails to blacklist
+- [x] Added function for delete emails from blacklist 😊
+
+#### New
+
+- [x] Now the "add" function doesn't allow you to enter the same email twice (if already present)
+- [x] Delete function doesn't delete the first email anymore, but check the entire array if an email is insert twice
+- [x] Check function fixed, now correctly send the response 
+- [x] Fixed all HTTP status 
+- [x] Code clear
+
 
 
 
