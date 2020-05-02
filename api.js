@@ -64,27 +64,58 @@ function filter(email)
   }
 };
 
-function addemail(user) 
+function addemail(email) 
 {
-  let rawdata = fs.readFileSync('pvt.json'); 
-  let data = JSON.parse(rawdata);
-  console.log(data);
+    //Open local file
+    let rawdata = fs.readFileSync('pvt.json'); //leggi il json
+    let mydata = JSON.parse(rawdata); //parse per renderlo leggibile e usabile 
+    let originaldata = JSON.parse(rawdata); 
 
-  /*let rawdata = fs.readFileSync('pvt.json'); 
-  let data = JSON.parse(rawdata);
+    mydata.blacklist = mydata.blacklist.filter(entry => entry.email !== email);
 
-  let struct = 
-  { 
-    "1":user
-  };
-
-  data.push(struct);
-
-  mydata = JSON.stringify(data);
-
-  fs.writeFileSync('pvt.json', mydata);
-  */
+    // se uguale, l'email non è presente nel filtro, la dimensione degli array è uguale e quindi deve essere aggiunta
+    if(JSON.stringify(mydata)==JSON.stringify(originaldata)) 
+    {
+      mydata['blacklist'].push({"email":email}); //inserisci la nuova mail nell'array
+      let data = JSON.stringify(mydata, null, 2); //utilizzo della funzione stringify + formattazione 
+      fs.writeFileSync('pvt.json', data); //sovrascrittura del file precedente con il nuovo (che comprende la nuova mail)
+      return(true); //return true per far vedere che è andato tutto a buon fine ! 
+    }
+    else // se sei nel ramo else, è perchè la dimensione dell'array originale è maggiore di quella filtrata, quindi l'email è presente
+    {
+      return(false);
+    }
 };
+
+
+
+function cancel(email) 
+{
+  
+    let rawdata = fs.readFileSync("pvt.json"); //get local json file
+    let mydata = JSON.parse(rawdata); //parsing rawdata
+    let originaldata = JSON.parse(rawdata);
+
+    mydata.blacklist = mydata.blacklist.filter(entry => entry.email !== email);
+
+    if(JSON.stringify(mydata)==JSON.stringify(originaldata)) // if equal, email is not deleted cause not found!
+    {
+      console.log("La funzione cancel è nel ramo if");
+      return(false);
+    }
+    else
+    {
+      console.log("La funzione cancel è nel ramo else");
+      let data = JSON.stringify(mydata, null, 2); //utilizzo della funzione stringify + formattazione 
+      fs.writeFileSync('pvt.json', data);
+      return(true);
+    }
+    
+}
+
+
+
+
 
 /********************************************************************************************************************************************************************************************* */
                                                                                       // - Api Services - //
@@ -130,14 +161,38 @@ app.get('/check/:id', function(req, res)
   }
 });
 
-//Check Server status
+//Add new mail to blacklist
 app.patch('/add/:id', function(req, res)
 {
   "use strict";
   let user = req.params.id; // catch email address
   console.log("\nSto aggiungendo l'email: " + user + "\n");
   let aggiunto = addemail(user);
-  //function
+  console.log("Aggiunto vale:" + aggiunto);
+  if(!aggiunto)
+  {
+    res.status(422).json({added: false}); // se l'email è già presente
+  }
+  else
+  {
+    res.status(201).json({added: true}); // se la richiesta si riesce a soddisfare + 201 (Created)
+  }
+});
+
+
+//Delete an email from blacklist 
+app.delete('/delete/:id', function(req, res)
+{
+  let user = req.params.id; // catch email address
+  let cancella = cancel(user);
+  if(!cancella)
+  {
+    res.status(404).json({deleted: false}); // se non si riesce ad eliminare la mail = 404 (Not found)
+  }
+  else
+  {
+    res.status(302).json({deleted: true}); //se si riesce ad eliminare la mail =  302 (found)
+  }
 });
 
 
