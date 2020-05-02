@@ -1,11 +1,7 @@
-[
-  {
-    "id": "black@gmail.com"
-  },
-  {
-    "id": "bad@gmail.com"
-  },
-  {
-    "id": "strangemail@gmail.com"
-  }
-]
+{ 
+  "blacklist": [
+    { "email": "strangemail@gmail.com" },
+    { "email": "strangemail1@gmail.com" },
+    { "email": "strangemail2@gmail.com" }
+  ]
+}

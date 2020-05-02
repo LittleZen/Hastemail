@@ -51,21 +51,40 @@ function filter(email)
 {
   let rawdata = fs.readFileSync('pvt.json');
   let mydata = JSON.parse(rawdata);
-
-  const result = mydata.filter(obj => 
+  var myarray = [];
+  var myarray = JSON.stringify(mydata.blacklist);
+  var result = myarray.includes(email);
+  if(!result)
   {
-    for (let [key, value] of Object.entries(obj)) 
-    {
-      if (value === email) 
-      {
-        return true;
-      }
-    }
-  });
-  console.log(result); // [ { '2': 'bad@gmail.com' } ]
-  return result.length > 0;   
+    return(false);
+  }
+  else
+  {
+    return(true);
+  }
 };
 
+function addemail(user) 
+{
+  let rawdata = fs.readFileSync('pvt.json'); 
+  let data = JSON.parse(rawdata);
+  console.log(data);
+
+  /*let rawdata = fs.readFileSync('pvt.json'); 
+  let data = JSON.parse(rawdata);
+
+  let struct = 
+  { 
+    "1":user
+  };
+
+  data.push(struct);
+
+  mydata = JSON.stringify(data);
+
+  fs.writeFileSync('pvt.json', mydata);
+  */
+};
 
 /********************************************************************************************************************************************************************************************* */
                                                                                       // - Api Services - //
@@ -114,21 +133,11 @@ app.get('/check/:id', function(req, res)
 //Check Server status
 app.patch('/add/:id', function(req, res)
 {
+  "use strict";
   let user = req.params.id; // catch email address
   console.log("\nSto aggiungendo l'email: " + user + "\n");
-
-  let file = editJsonFile(`pvt.json`); 
-  file.set([], {1:user});
-  file.save();
-
-  file = editJsonFile(`pvt.json`, 
-  {
-    autosave: true
-  });
-
-  console.log(file.data);
-  res.send("\n\nfile sent" +file.toObject());
-
+  let aggiunto = addemail(user);
+  //function
 });
 
 
