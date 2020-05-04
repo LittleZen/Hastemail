@@ -67,6 +67,11 @@ About | Description
 `Client` | *C# - MetroFramework*
 -----------
 
+### Licenza
+Per la scelta della licensa si è scelto di utilizzare il servizio "https://choosealicense.com/", che sulla base delle informazioni fornite, e cioè sulla necessità di mentenere il codice più aperto e utilizzabile possibile, ha suggerito l'implementazione della licenza GNU V3
+
+
+-----------
 ## All Changes:
 
 
@@ -104,7 +109,7 @@ About | Description
 
 #### New
 
-- [x] Client Release 
+- [x] Client Released 
 - [x] License GNU V3
 
 
