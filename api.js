@@ -1,14 +1,11 @@
-/********************************************************************************* Haste Mail version 1.0 *********************************************************************************************/
+/********************************************************************************* Haste Mail version 1.1 *********************************************************************************************/
 
 // General API Server Configuration //
 const express = require('express');
 const cors = require('cors');
-const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 const bodyParser = require('body-parser');
 const sha256 = require("js-sha256");
-const editJsonFile = require("edit-json-file");
-//const router = express.Router();
-var fs = require('fs');
+const fs = require('fs');
 
 
 // App Settings //
@@ -25,18 +22,19 @@ app.use(bodyParser.json());
 // Main Page + CORS //
 app.use(cors());
 app.options('*', cors());
-app.use(express.static('public'));
 
 
-//Set-up xml request
-var Http = new XMLHttpRequest();
+//Account for login
+//User: jack
+//PSW: pdgt2020
+const logins = new Map();
+logins.set('jack', { salt: '01041999', hash: '039c86dcbd5b4293cfda4a08c1a3047b0294af42b2c39eb0e12e5e0b0eab4fc3' });
 
 
 /********************************************************************************************************************************************************************************************* */
                                                                                        // - General Function - //
 /********************************************************************************************************************************************************************************************* */
-
-//check json file 
+//check the entire black-list
 function testing() 
 {
     let rawdata = fs.readFileSync('pvt.json');
@@ -46,14 +44,14 @@ function testing()
 };
 
 
-//filter json file
+//Check if an email is present in blacklist
 function filter(email) 
 {
   var myarray = [];
-  let rawdata = fs.readFileSync('pvt.json');
-  let mydata = JSON.parse(rawdata);
+  let rawdata = fs.readFileSync('pvt.json'); //get local database 
+  let mydata = JSON.parse(rawdata); //parsing local db 
   var myarray = JSON.stringify(mydata.blacklist);
-  var result = myarray.includes(email);
+  var result = myarray.includes(email); //function used for check if an email is already present 
   if(!result)
   {
     return(false);
@@ -64,41 +62,46 @@ function filter(email)
   }
 };
 
+
+// add an email to blacklist 
 function addemail(email) 
 {
     //Open local file
-    let rawdata = fs.readFileSync('pvt.json'); //leggi il json
-    let mydata = JSON.parse(rawdata); //parse per renderlo leggibile e usabile 
+    let rawdata = fs.readFileSync('pvt.json'); //Opening local database 
+    let mydata = JSON.parse(rawdata); //parse 
     let originaldata = JSON.parse(rawdata); 
 
-    mydata.blacklist = mydata.blacklist.filter(entry => entry.email !== email);
+    //it will create a new array without the "key" entered, in this case the var "email"
+    mydata.blacklist = mydata.blacklist.filter(entry => entry.email !== email); 
 
-    // se uguale, l'email non è presente nel filtro, la dimensione degli array è uguale e quindi deve essere aggiunta
+    // if dimension is equal to original json , the email you are looking for is not present
     if(JSON.stringify(mydata)==JSON.stringify(originaldata)) 
     {
-      mydata['blacklist'].push({"email":email}); //inserisci la nuova mail nell'array
-      let data = JSON.stringify(mydata, null, 2); //utilizzo della funzione stringify + formattazione 
-      fs.writeFileSync('pvt.json', data); //sovrascrittura del file precedente con il nuovo (che comprende la nuova mail)
-      return(true); //return true per far vedere che è andato tutto a buon fine ! 
+      mydata['blacklist'].push({"email":email}); //insert new email
+      let data = JSON.stringify(mydata, null, 2); //convert all in json
+      fs.writeFileSync('pvt.json', data); //overwrite the changes
+      return(true); 
     }
-    else // se sei nel ramo else, è perchè la dimensione dell'array originale è maggiore di quella filtrata, quindi l'email è presente
+    else 
     {
       return(false);
     }
 };
 
 
-
+// Delete an email from blacklist
 function cancel(email) 
 {
   
-    let rawdata = fs.readFileSync("pvt.json"); //get local json file
-    let mydata = JSON.parse(rawdata); //parsing rawdata
-    let originaldata = JSON.parse(rawdata);
+    let rawdata = fs.readFileSync("pvt.json"); //Opening local database 
+    let mydata = JSON.parse(rawdata); //parse
+    let originaldata = JSON.parse(rawdata); //get a copy 
 
+    //it will create a new array without the "key" entered, in this case the var "email"
     mydata.blacklist = mydata.blacklist.filter(entry => entry.email !== email);
 
-    if(JSON.stringify(mydata)==JSON.stringify(originaldata)) // if equal, email is not deleted cause not found!
+    //check if the email submitted is not already present
+    if(JSON.stringify(mydata)==JSON.stringify(originaldata)) 
     {
       console.log("La funzione cancel è nel ramo if");
       return(false);
@@ -106,15 +109,43 @@ function cancel(email)
     else
     {
       console.log("La funzione cancel è nel ramo else");
-      let data = JSON.stringify(mydata, null, 2); //utilizzo della funzione stringify + formattazione 
-      fs.writeFileSync('pvt.json', data);
+      let data = JSON.stringify(mydata, null, 2);  //convert all in json
+      fs.writeFileSync('pvt.json', data); //overwrite the changes
       return(true);
     }
     
 }
 
+// Login function (check user and password)
+function attemptLogin(username, password) 
+{
+  if(!logins.has(username)) 
+  {
+    return false;
+  }
+  
+  const user = logins.get(username);
+  
+  const compound = user.salt + password;
+  const h = sha256.create();
+  h.update(compound);
+  
+  console.log("Verifying " + user.hash + " == " + h.hex());
+  
+  return h.hex() == user.hash;
+}
 
-
+// Login function (callback)
+function authentication(username, password)
+{
+  if(!attemptLogin(username, password)) 
+  {
+    console.log("Autenticazione errata!");
+    return (false);
+  }
+  console.log("Sei autenticato!");
+  return (true);
+}
 
 
 /********************************************************************************************************************************************************************************************* */
@@ -128,6 +159,11 @@ app.listen(PORT, function()
     console.log(`\nQui il server gira in ascolto, in attesa di ricevere la mail.\n\n Il server è in ascolto alla porta: ${PORT}`);
 });
 
+//Check Server status
+app.get('/', function(req, res)
+{
+    res.status(200).send("Server is running...").end();
+});
 
 //Check Server status
 app.get('/status', function(req, res)
@@ -147,54 +183,95 @@ app.get('/list', function(req,res)
 //Check if and id is present in to the list
 app.get('/check/:id', function(req, res)
 {
-  let user = req.params.id; // catch email address
+  let user = req.params.id; 
   let example = filter(user);
-  console.log(example); // example è una variabile true/false, la puoi utilizzare per verificare se una mail è presente!!
+  console.log(example); 
 
   if(!example)
   {
-    res.status(404).json({block: false}); // se non è presente, ritorna 404 + json false
+    res.status(200).json({block: false}); 
   }
   else
   {
-    res.status(302).json({block: true}); // se presente, ritorna 302 + json true
+    res.status(200).json({block: true}); 
   }
 });
 
 //Add new mail to blacklist
 app.patch('/add/:id', function(req, res)
 {
-  "use strict";
-  let user = req.params.id; // catch email address
-  console.log("\nSto aggiungendo l'email: " + user + "\n");
-  let aggiunto = addemail(user);
-  console.log("Aggiunto vale:" + aggiunto);
-  if(!aggiunto)
+  const username = req.query.username;
+  const password = req.query.password;
+  let result = authentication(username, password);
+
+  if(!result)
   {
-    res.status(422).json({added: false}); // se l'email è già presente
+    res.status(403).send("You must be logged-in order to add emails to blacklist!").end();
   }
   else
-  {
-    res.status(201).json({added: true}); // se la richiesta si riesce a soddisfare + 201 (Created)
+  { 
+    "use strict";
+    let user = req.params.id; // catch email address
+    console.log("\nSto aggiungendo l'email: " + user + "\n");
+    let aggiunto = addemail(user);
+    console.log("Aggiunto vale:" + aggiunto);
+    if(!aggiunto)
+    {
+      res.status(201).json({added: false}); 
+    }
+    else
+    {
+      res.status(201).json({added: true});
+    }
   }
+ 
 });
 
 
 //Delete an email from blacklist 
 app.delete('/delete/:id', function(req, res)
 {
-  let user = req.params.id; // catch email address
-  let cancella = cancel(user);
-  if(!cancella)
+  const username = req.query.username;
+  const password = req.query.password;
+  let result = authentication(username, password);
+
+  if(!result)
   {
-    res.status(404).json({deleted: false}); // se non si riesce ad eliminare la mail = 404 (Not found)
+    res.status(403).send("You must be logged-in order to delete emails from the blacklist!").end();
   }
   else
-  {
-    res.status(302).json({deleted: true}); //se si riesce ad eliminare la mail =  302 (found)
+  { 
+    let user = req.params.id; 
+    let cancella = cancel(user);
+    if(!cancella)
+    {
+      res.status(200).json({deleted: false}); 
+    }
+    else
+    {
+      res.status(200).json({deleted: true});
+    }
   }
+  
 });
 
+
+// Login System 
+app.post('/login', (req, res) => 
+{
+  const username = req.query.username;
+  const password = req.query.password;
+  let result = authentication(username, password);
+
+  if(!result)
+  {
+    res.status(403).json({login: false}).end();
+  }
+  else
+  { 
+    res.status(200).json({login: true}).end();
+  }
+});
 
 
 

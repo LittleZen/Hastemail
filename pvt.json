@@ -2,6 +2,15 @@
   "blacklist": [
     {
       "email": "b@gmail.com"
+    },
+    {
+      "email": "c@gmail.com"
+    },
+    {
+      "email": "test@gmail.com"
+    },
+    {
+      "email": "a@gmail.com"
     }
   ]
 }

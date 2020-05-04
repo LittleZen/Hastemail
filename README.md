@@ -11,7 +11,7 @@ A Simple API for check Spam and Temporary mails
 - [Collegarsi a HastEmail](#collegarsi-a-hastemail)
 - [Architettura e scelte di progetto](#architettura-e-scelte-di-progetto)
 - [Servizi esterni utlizzati](#servizi-esterni-utlizzati)
-- [Host del servizio](#host-del-servizio)
+- [About hastemail](#about-hastemail)
 - [Licenza](#licenza)
 - [Patch Note](#all-changes)
 
@@ -40,19 +40,32 @@ Di eseguito la documentazione per inoltrare correttamente la richiesta:
 -----------
 ### Architettura e scelte di progetto
 L'archituttura è stata scelta basandosi sul modello API-RESTful, ed è implementata come segue:
-1. Server scritto in NodeJS + Express
+1. Server scritto in NodeJS + Express 
 2. Protezione di alcune delle funzioni dell'API in Basic Authentication (con password in sha256 + salt)
-3. Database scritto in JSON 
+3. Database scritto in JSON (nome: pvt.json)
 4. Client scritto in C# + MetroFramework (invia dati e gestisce le risposte del server)
 5. Implementazione della piattaforma su Heroku
 -----------
 ### Servizi esterni utlizzati
-Oltre all'utilizzo di Heroku, non vi sono ulteriori servizi esterni utilizzati, tuttavia l'api si appoggia ad alcune librerie di terze parti per eseguire alcune funzioni.
-Di seguito le librerie utilizzate
+Si è scelto di non utilizzare alcun servizio estero. L'api è stata progettata per funzionare in locale, bypassando le limitazioni in CORS, tuttavia la stessa si appoggia ad alcune librerie di terze parti per eseguire alcune funzioni.
+Di seguito le librerie utilizzate:
 
-
-### Host del servizio
-Si è scelto di utilizzare il server Heroku per hostare l'applicazione, al fine di garantire la possibilità di testare l'api. Si fa inoltre presente che Heroku implementa un certificato HTTPS, di conseguenza lo scambio di dati fra il server e il client resta criptato.
+Library | Description
+--- | --- 
+`express` | *NodeJS Framework*
+`cors` | *System used for bypass CORS limitation*
+`bodyParser` | *middleware for parsing the response*
+`sha256` | *Hasing lib used for hash password in basic auth*
+`fs` | *Lib used for get local file (blacklist)*
+-----------
+### About hastemail
+About | Description
+--- | --- 
+`Developer` | *Jacopo M. Mengarelli (Zenek @Hastro)*
+`BASED` | *Urbino - Italy*
+`API` | *NodeJS + Javascirpt + Express*
+`Client` | *C# - MetroFramework*
+-----------
 
 ## All Changes:
 
@@ -79,6 +92,22 @@ Si è scelto di utilizzare il server Heroku per hostare l'applicazione, al fine 
 - [x] Check function fixed, now correctly send the response 
 - [x] Fixed all HTTP status 
 - [x] Code clear
+
+
+### Update [04/05/2020]
+
+- [x] Deleted unnecessary file
+- [x] Deleted HTML folder
+- [x] Fixed status code
+- [x] Comments cleared
+- [x] Code clear
+
+#### New
+
+- [x] Client Release 
+- [x] License GNU V3
+
+
 
 
 
