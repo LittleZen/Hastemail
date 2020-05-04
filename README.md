@@ -4,20 +4,55 @@ A Simple API for check Spam and Temporary mails
 ![Demo](https://i.imgur.com/eYv6KLG.png)
 
 
-[DOWNLOAD - CLIENT]() | [SOURCE - API]() | [ISSUE](https://bit.ly/336o6z6)
+[DOWNLOAD - CLIENT](https://github.com/Zenek-Hastro/HastEmail-Client/releases/) | [ISSUE](https://bit.ly/336o6z6)
 
 ## Index
-- [Patch Note](#all-changes)
+-[Presentazione Api](#presentazione-api)
+-[Collegarsi a HastEmail](#collegarsi-a-hastemail)
+-[Architettura e scelte di progetto](#architettura-e-scelte-di-progetto)
+-[Servizi esterni utlizzati](#servizi-esterni-utlizzati)
+-[Host del servizio](#host-del-servizio)
+-[Licenza](#licenza)
+-[Patch Note](#all-changes)
+
+-----------
+### Presentazione API
+HasteEmail è un Servizio Web che consente di filtrare le email segnalate come spam o che sono state riconosciute come ingannevoli. Il suo obiettivo è quello di proteggere i vari siti web che la implementano, al fine di validare una corretta registrazione di un utente, e negare l'accesso a bot o malintenzionati.
+HastEmail ha quindi diverse funzionalità:
+>1. Si può inviare una richiesta `GET` al server contenente una mail, questa verrà cercata nel database locale
+>2. Si può inviare una richiesta `GET` generica al server, lo stesso risponderà con la lista di tutte le mail presenti in blacklist
+>3. Si può inviare una richiesta `DELETE`al server contenente una mail, questa verrà eliminata dal database locale*
+>4. Si può inviare una richiesta `PATCH`al server contenente una mail, questa verrà aggiunta al database locale*
 
 
-## How is set-up hastemail?:
-Type | Are the *Spam* domains blocked?| Are the *BlackList* emails blocked? | Are the *Unavailable* emails blocked?  
-:-: | :-: | :-: | :-: | 
-`Are they blocked?` | *yes* | *yes* | *no* |
+###### * = Queste richieste necessitano di autenticazione. L'api protegge i verbi `PATCH` e `DELETE` con la Basic Authentication  
+-----------
+### Collegarsi a HastEmail
+Per collegarsi ad HastEmail è necessario eseguire delle semplici richieste in http, impostando il verbo giusto.
+Di eseguito la documentazione per inoltrare correttamente la richiesta:
 
-## About the scan ...
-Hastemail, simply check a local database made in JSON for check if an email is currently signed as malicious. New functions allow hastemail to check if a domain is reliable and secure, and the api can reject the disposable and spam domains!
+#### Inviare le richieste
+- `/status`: metodo **GET**, verifica che il server funzioni correttamente. In caso di riscontro positivo ritorna status 200 (OK)
+- `/list`: metodo **GET**, ritorna un file Json contenente tutte le mail presenti nel database locale
+- `/check/:id`: metodo **GET**, verifica che un'email sia presente o meno nella blacklist. Ritorna un oggetto Json di tipo {block: t/f}
+- `/add/id`: metodo **PATCH**, consente di inserire una mail nella blacklist. Ritorna un oggetto json del tipo {added: t/f}
+- `/add/id`: metodo **DELETE**, consente di eliminare una mail dalla blacklist. Ritorna un oggetto json del tipo {deleted: t/f}
+-----------
+### Architettura e scelte di progetto
+L'archituttura è stata scelta basandosi sul modello API-RESTful, ed è implementata come segue:
+1. Server scritto in NodeJS + Express
+2. Protezione di alcune delle funzioni dell'API in Basic Authentication (con password in sha256 + salt)
+3. Database scritto in JSON 
+4. Client scritto in C# + MetroFramework (invia dati e gestisce le risposte del server)
+5. Implementazione della piattaforma su Heroku
+-----------
+### Servizi esterni utlizzati
+Oltre all'utilizzo di Heroku, non vi sono ulteriori servizi esterni utilizzati, tuttavia l'api si appoggia ad alcune librerie di terze parti per eseguire alcune funzioni.
+Di seguito le librerie utilizzate
 
+
+### Host del servizio
+Si è scelto di utilizzare il server Heroku per hostare l'applicazione, al fine di garantire la possibilità di testare l'api. Si fa inoltre presente che Heroku implementa un certificato HTTPS, di conseguenza lo scambio di dati fra il server e il client resta criptato.
 
 ## All Changes:
 
