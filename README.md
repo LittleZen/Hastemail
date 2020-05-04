@@ -1,5 +1,5 @@
 # Hastemail
-A Simple API for check Spam and Temporary mails
+A Simple API for check Spam and Malicious mails
 
 ![Demo](https://i.imgur.com/eYv6KLG.png)
 
