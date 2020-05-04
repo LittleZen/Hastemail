@@ -4,16 +4,16 @@ A Simple API for check Spam and Temporary mails
 ![Demo](https://i.imgur.com/eYv6KLG.png)
 
 
-[DOWNLOAD - CLIENT](https://github.com/Zenek-Hastro/HastEmail-Client/releases/) | [ISSUE](https://bit.ly/336o6z6)
+[CLIENT](https://github.com/Zenek-Hastro/HastEmail-Client/releases/) | [ISSUE](https://bit.ly/336o6z6)
 
 ## Index
--[Presentazione Api](#presentazione-api)
--[Collegarsi a HastEmail](#collegarsi-a-hastemail)
--[Architettura e scelte di progetto](#architettura-e-scelte-di-progetto)
--[Servizi esterni utlizzati](#servizi-esterni-utlizzati)
--[Host del servizio](#host-del-servizio)
--[Licenza](#licenza)
--[Patch Note](#all-changes)
+- [Presentazione Api](#presentazione-api)
+- [Collegarsi a HastEmail](#collegarsi-a-hastemail)
+- [Architettura e scelte di progetto](#architettura-e-scelte-di-progetto)
+- [Servizi esterni utlizzati](#servizi-esterni-utlizzati)
+- [Host del servizio](#host-del-servizio)
+- [Licenza](#licenza)
+- [Patch Note](#all-changes)
 
 -----------
 ### Presentazione API
