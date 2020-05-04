@@ -76,7 +76,7 @@ About | Description
 - [x] Code and dependecies cleared
 - [x] Hastemail now check private database in JSON
 - [x] New readme, new start, new stuff 😊
-
+-----------
 
 ### Update [02/05/2020]
 
@@ -93,7 +93,7 @@ About | Description
 - [x] Fixed all HTTP status 
 - [x] Code clear
 
-
+-----------
 ### Update [04/05/2020]
 
 - [x] Deleted unnecessary file
