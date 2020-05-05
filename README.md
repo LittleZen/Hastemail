@@ -67,7 +67,6 @@ About | Description
 `Matricola` | *292728*
 `LOCATION` | *Urbino - Italy*
 `API` | *NodeJS + Javascirpt + Express*
-`Client` | *C# - MetroFramework*
 -----------
 
 ### Licenza
