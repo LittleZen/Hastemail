@@ -36,15 +36,17 @@ Di eseguito la documentazione per inoltrare correttamente la richiesta:
 - `/list`: metodo **GET**, ritorna un file Json contenente tutte le mail presenti nel database locale
 - `/check/:id`: metodo **GET**, verifica che un'email sia presente o meno nella blacklist. Ritorna un oggetto Json di tipo {block: t/f}
 - `/add/id`: metodo **PATCH**, consente di inserire una mail nella blacklist. Ritorna un oggetto json del tipo {added: t/f}
-- `/add/id`: metodo **DELETE**, consente di eliminare una mail dalla blacklist. Ritorna un oggetto json del tipo {deleted: t/f}
+- `/delete/id`: metodo **DELETE**, consente di eliminare una mail dalla blacklist. Ritorna un oggetto json del tipo {deleted: t/f}
 -----------
 ### Architettura e scelte di progetto
 L'archituttura è stata scelta basandosi sul modello API-RESTful, ed è implementata come segue:
 1. Server scritto in NodeJS + Express 
 2. Protezione di alcune delle funzioni dell'API in Basic Authentication (con password in sha256 + salt)
 3. Database scritto in JSON (nome: pvt.json)
-4. Client scritto in C# + MetroFramework (invia dati e gestisce le risposte del server)
+4. Client scritto in C# + MetroFramework (invia dati e gestisce le risposte del server)*
 5. Implementazione della piattaforma su Heroku
+
+###### * = La repository del `CLIENT` è disponibile QUI[https://github.com/Zenek-Hastro/HastEmail-Client]  
 -----------
 ### Servizi esterni utlizzati
 Per promuovere l'app, si è scelto di utilizzare il servizio Heroku, che oltre a garantire un canale HTTPS, fornisce un sistema di *Automatic deploys* sulla risorsa GitHub per il *continuous integration* degli update. Non è obbligatorio utilizzare la risorsa heroku, difatti l'api è stata progettata per funzionare anche in locale, bypassando le limitazioni in CORS e garantendo uno sviluppo fluido anche in localhost. Infine la stessa API si appoggia ad alcune librerie di terze parti per eseguire alcune funzioni.
