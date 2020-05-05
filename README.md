@@ -47,7 +47,7 @@ L'archituttura è stata scelta basandosi sul modello API-RESTful, ed è implemen
 5. Implementazione della piattaforma su Heroku
 -----------
 ### Servizi esterni utlizzati
-Per promuovere l'app, si è scelto di utilizzare il servizio Heroku, che oltre a garantire un canale HTTPS, fornisce un sistema di *Automatic deploys* sulla risorsa GitHub per il *continuous integration* degli update. Non è obbligatorio utilizzare la risorsa heroku, difatti l'api è stata progettata per funzionare anche in locale, bypassando le limitazioni in CORS e garantendo uno sviluppo sfluido anche in localhost. Infine la stessa API si appoggia ad alcune librerie di terze parti per eseguire alcune funzioni.
+Per promuovere l'app, si è scelto di utilizzare il servizio Heroku, che oltre a garantire un canale HTTPS, fornisce un sistema di *Automatic deploys* sulla risorsa GitHub per il *continuous integration* degli update. Non è obbligatorio utilizzare la risorsa heroku, difatti l'api è stata progettata per funzionare anche in locale, bypassando le limitazioni in CORS e garantendo uno sviluppo fluido anche in localhost. Infine la stessa API si appoggia ad alcune librerie di terze parti per eseguire alcune funzioni.
 Di seguito le librerie utilizzate:
 
 Library | Description
@@ -62,7 +62,8 @@ Library | Description
 About | Description
 --- | --- 
 `Developer` | *Jacopo M. Mengarelli (Zenek @Hastro)*
-`BASED` | *Urbino - Italy*
+`Matricola` | *292728*
+`LOCATION` | *Urbino - Italy*
 `API` | *NodeJS + Javascirpt + Express*
 `Client` | *C# - MetroFramework*
 -----------
