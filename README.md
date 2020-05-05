@@ -46,7 +46,7 @@ L'archituttura è stata scelta basandosi sul modello API-RESTful, ed è implemen
 4. Client scritto in C# + MetroFramework (invia dati e gestisce le risposte del server)*
 5. Implementazione della piattaforma su Heroku
 
-###### * = La repository del `CLIENT` è disponibile QUI[https://github.com/Zenek-Hastro/HastEmail-Client]  
+###### * = La repository del `CLIENT` è disponibile QUI(https://github.com/Zenek-Hastro/HastEmail-Client)  
 -----------
 ### Servizi esterni utlizzati
 Per promuovere l'app, si è scelto di utilizzare il servizio Heroku, che oltre a garantire un canale HTTPS, fornisce un sistema di *Automatic deploys* sulla risorsa GitHub per il *continuous integration* degli update. Non è obbligatorio utilizzare la risorsa heroku, difatti l'api è stata progettata per funzionare anche in locale, bypassando le limitazioni in CORS e garantendo uno sviluppo fluido anche in localhost. Infine la stessa API si appoggia ad alcune librerie di terze parti per eseguire alcune funzioni.
