@@ -64,7 +64,7 @@ About | Description
 --- | --- 
 `Developer` | *Jacopo M. Mengarelli (Zenek @Hastro)*
 `Matricola` | *292728*
-`LOCATION` | *Urbino - Italy*
+`LOCATION` | *Italy*
 `API` | *NodeJS + Javascirpt + Express*
 -----------
 
