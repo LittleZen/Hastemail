@@ -114,6 +114,12 @@ Per la scelta della licensa si è scelto di utilizzare il servizio "https://choo
 - [x] Api is now hosted on Heroku!
 - [x] License GNU V3
 
+-----------
+### Update [29/10/2020]
+
+- [x] CVE-2020-8147 Vulnerability Mitigated
+- [x] Minor BugFix and comments/log fixed
+
 
 
 

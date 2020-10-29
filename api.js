@@ -15,7 +15,7 @@ const app = express();
 
 // Import bodyparser settings //
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser());
+//app.use(bodyParser());
 app.use(bodyParser.json());
 
 
@@ -103,14 +103,14 @@ function cancel(email)
     //check if the email submitted is not already present
     if(JSON.stringify(mydata)==JSON.stringify(originaldata)) 
     {
-      console.log("La funzione cancel è nel ramo if");
+      console.log("ERRORE! Sicuro esista la mail?");
       return(false);
     }
     else
     {
-      console.log("La funzione cancel è nel ramo else");
       let data = JSON.stringify(mydata, null, 2);  //convert all in json
       fs.writeFileSync('pvt.json', data); //overwrite the changes
+      console.log("Rimossa!");
       return(true);
     }
     
