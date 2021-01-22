@@ -25,10 +25,11 @@ app.options('*', cors());
 
 
 //Account for login
-//User: jack
-//PSW: pdgt2020
+//User: oop
+//PSW: oop
 const logins = new Map();
-logins.set('jack', { salt: '01041999', hash: '039c86dcbd5b4293cfda4a08c1a3047b0294af42b2c39eb0e12e5e0b0eab4fc3' });
+// SHA256 created as --> salt+password = 01041999pdgt2020
+logins.set('oop', { salt: '01041999', hash: '81839077626e71fe901454e2444d73ecd659260a7118c25d883931c1103eb8f6' });
 
 
 /********************************************************************************************************************************************************************************************* */
