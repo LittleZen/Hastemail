@@ -267,11 +267,11 @@ app.post('/login', (req, res) =>
 
   if(!result)
   {
-    res.status(403).json({login: false}).end();
+    res.status(403).json({success: false}).end();
   }
   else
   { 
-    res.status(200).json({login: true}).end();
+    res.status(200).json({success: true}).end();
   }
 });
 
