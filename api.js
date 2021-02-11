@@ -53,6 +53,7 @@ function filter(email)
   let mydata = JSON.parse(rawdata); //parsing local db 
   var myarray = JSON.stringify(mydata.blacklist);
   var result = myarray.includes(email); //function used for check if an email is already present 
+  
   if(!result)
   {
     return(false);
@@ -190,11 +191,11 @@ app.get('/check/:id', function(req, res)
 
   if(!example)
   {
-    res.status(200).json({block: false}); 
+    res.status(200).json({success: false}); 
   }
   else
   {
-    res.status(200).json({block: true}); 
+    res.status(200).json({success: true}); 
   }
 });
 
@@ -218,11 +219,11 @@ app.patch('/add/:id', function(req, res)
     console.log("Aggiunto vale:" + aggiunto);
     if(!aggiunto)
     {
-      res.status(201).json({added: false}); 
+      res.status(201).json({success: false}); 
     }
     else
     {
-      res.status(201).json({added: true});
+      res.status(201).json({success: true});
     }
   }
  
@@ -246,11 +247,11 @@ app.delete('/delete/:id', function(req, res)
     let cancella = cancel(user);
     if(!cancella)
     {
-      res.status(200).json({deleted: false}); 
+      res.status(200).json({success: false}); 
     }
     else
     {
-      res.status(200).json({deleted: true});
+      res.status(200).json({success: true});
     }
   }
   
